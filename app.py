@@ -2083,4 +2083,5 @@ def generate_proforma(order_id):
         return redirect(url_for('confirmation', order_id=order_id))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5017)
+    port = int(os.environ.get("PORT", 5000))  # Render fournit le port via la variable PORT
+    app.run(host='0.0.0.0', port=port, debug=True)
