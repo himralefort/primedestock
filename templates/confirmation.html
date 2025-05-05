@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    /* Styles pour la facture */
+    .btn-invoice {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #2a5bd7 0%, #1e4aba 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(42, 91, 215, 0.3);
+    }
+
+    .btn-invoice:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(42, 91, 215, 0.4);
+    }
+
+    .btn-invoice:active {
+        transform: translateY(0);
+    }
+
+    .btn-invoice::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 60%
+        );
+        transform: rotate(30deg);
+        transition: all 0.3s ease;
+    }
+
+    .btn-invoice:hover::before {
+        left: 100%;
+    }
+
+    .invoice-icon {
+        font-size: 1.2rem;
+    }
+
+    .confirmation-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 40px;
+    }
+    /* Styles pour le bouton de facture */
+.btn-invoice {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #2a5bd7 0%, #1e4aba 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(42, 91, 215, 0.3);
+    text-decoration: none;
+}
+
+.btn-invoice:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(42, 91, 215, 0.4);
+    color: white;
+}
+
+.btn-invoice:active {
+    transform: translateY(0);
+}
+
+.btn-invoice::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    transform: rotate(30deg);
+    transition: all 0.3s ease;
+}
+
+.btn-invoice:hover::before {
+    left: 100%;
+}
+
+.invoice-icon {
+    font-size: 1.2rem;
+}
+
+.download-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e53e3e;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.confirmation-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="confirmation-container">
+    <div class="confirmation-icon">
+        <i class="fas fa-check-circle"></i>
+    </div>
+    
+    <h1>Merci pour votre commande !</h1>
+    <p>Votre commande a été passée avec succès. Vous recevrez bientôt un email de confirmation.</p>
+    
+    <div class="order-details">
+        <div class="order-detail-row">
+            <span>Numéro de commande</span>
+            <span>{{ order.id }}</span>
+        </div>
+        <div class="order-detail-row">
+            <span>Date</span>
+            <span>{{ order.date }}</span>
+        </div>
+        <div class="order-detail-row">
+            <span>Statut</span>
+            <span>{{ order.status }}</span>
+        </div>
+        <div class="order-detail-row total">
+            <span>Total</span>
+            <span>{{ "%.2f"|format(order.total) }}€</span>
+        </div>
+    </div>
+    
+    <div class="confirmation-actions">
+        <a href="{{ url_for('generate_proforma', order_id=order.id) }}" class="btn-invoice" download>
+            <i class="fas fa-file-pdf invoice-icon"></i> Télécharger la facture proforma
+            <span class="download-badge">PDF</span>
+        </a>
+        <a href="{{ url_for('product_list') }}" class="btn btn-primary">
+            <i class="fas fa-shopping-bag"></i> Continuer vos achats
+        </a>
+        <a href="{{ url_for('account') }}" class="btn btn-outline">
+            <i class="fas fa-user"></i> Voir mon compte
+        </a>
+    </div>
+</section>
+{% endblock %}

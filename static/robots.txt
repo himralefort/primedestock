@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /compte
+Disallow: /panier
+
+Sitemap: https://primedestockagealimentaire.fr/sitemap.xml
